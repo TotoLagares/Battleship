@@ -17,12 +17,16 @@ public class Tablero {
     public Casilla getCasilla(int fila, int col) {
         return casillas[fila][col];
     }
+
+    public Casilla[][] getTablero() {
+        return casillas;
+    }
+
     public void crearBarcos(){
         //----Llamo a la matriz del trablero y hago un num random entre 0 y 9-----
 
         Casilla[][] a = casillas;
-        //int random = (int) (Math.random() * 10);
-        int random = 0;
+        int random = (int) (Math.random() * 10);
 
         //----Recorro la matriz poniendo los barcos en false---
         for(int i =0; i<=9; i ++){

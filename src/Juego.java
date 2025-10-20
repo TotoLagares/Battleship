@@ -7,8 +7,8 @@ public class Juego {
 
     public Juego(){
         this.turnoActual=true;
-        this.tableroJugador1=new Tablero();
-        this.tableroJugador2=new Tablero();
+        this.tableroJugador1= new Tablero();
+        this.tableroJugador2= new Tablero();
     };
 
     public boolean getTurnoActual(){

@@ -9,8 +9,6 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.border.LineBorder;
 
-
-
 public class BattleShipGUI extends JFrame {
     private JButton startButton;
     private JButton[][] tableroj1= new JButton[10][10];
@@ -109,6 +107,8 @@ public class BattleShipGUI extends JFrame {
         }
         return panelPowerUps;
     }
+
+
     //--- Mostrar un tablero solo---
     public JPanel switchJugador1() {
         JPanel panelTotal = new JPanel(new GridBagLayout()); // Cambiamos el layout a GridBagLayout
@@ -187,6 +187,8 @@ public class BattleShipGUI extends JFrame {
     public JButton[][] getTableroj2() {
         return tableroj2;
     }
+    public JButton[] getJ1PowerUps() {return j1PowerUps;}
+    public JButton[] getJ2PowerUps() {return j2PowerUps;}
 
 
 
