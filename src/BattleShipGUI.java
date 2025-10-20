@@ -6,13 +6,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import javax.imageio.ImageIO;
-import javax.swing.border.LineBorder;
-
 
 
 public class BattleShipGUI extends JFrame {
     private JButton startButton;
+    private JButton cambiarPosicion1 = new JButton();
+    private JButton cambiarPosicion2 = new JButton();
+    private JButton confirmar = new JButton();
+    private JButton continuar = new JButton();
     private JButton[][] tableroj1= new JButton[10][10];
     private JButton[][] tableroj2= new JButton[10][10];
     private JButton[] j1PowerUps= new JButton[3];
@@ -45,8 +48,7 @@ public class BattleShipGUI extends JFrame {
     };
 
     // ---Creo Tablero--- Cambiar para que sea void
-    private JPanel crearTablero(JButton[][] a) {
-        JPanel tableroGUI = new JPanel(new GridLayout(10, 10));
+    private void crearTablero(JButton[][] a) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 if (a[i][j] == null) { // Creamos el botón solo si no existe
@@ -55,10 +57,8 @@ public class BattleShipGUI extends JFrame {
                     botonCelda.setContentAreaFilled(false);
                     a[i][j] = botonCelda;
                 }
-                tableroGUI.add(a[i][j]);
             }
         }
-        return tableroGUI;
     }
     public void addTableroListener(ActionListener listener) {
         for (int i = 0; i < tableroj1.length; i++) {
@@ -79,15 +79,12 @@ public class BattleShipGUI extends JFrame {
 
 
     // ---Creo Panel PowerUps
-    private JPanel crearPanelPowerUps(JButton[] a) {
-        JPanel panel = new JPanel();
+    private void crearPanelPowerUps(JButton[] a) {
         for (int i=0;i<3; i++ ) {
             JButton boton = new JButton();
             boton.setPreferredSize(new Dimension(30, 30));
             a[i]=boton;
-            panel.add(boton);
         }
-        return panel;
     }
 
     //---getTablero---
@@ -111,7 +108,7 @@ public class BattleShipGUI extends JFrame {
     }
     //--- Mostrar un tablero solo---
     public JPanel switchJugador1() {
-        JPanel panelTotal = new JPanel(new GridBagLayout()); // Cambiamos el layout a GridBagLayout
+        JPanel panelTotal = new JPanel(new GridBagLayout());
         panelTotal.setPreferredSize(new Dimension(700, 700));
 
         JPanel panelJuego1 = new JPanel(new BorderLayout(30, 30));
@@ -139,7 +136,7 @@ public class BattleShipGUI extends JFrame {
     }
 
     public JPanel switchJugador2() {
-        JPanel panelTotal2 = new JPanel(new GridBagLayout()); // Cambiamos el layout a GridBagLayout
+        JPanel panelTotal2 = new JPanel(new GridBagLayout());
         panelTotal2.setPreferredSize(new Dimension(700, 700));
 
         JPanel panelJuego2 = new JPanel(new BorderLayout(30, 30));
@@ -178,6 +175,74 @@ public class BattleShipGUI extends JFrame {
         crearPanelPowerUps(j2PowerUps);
 
     }
+
+    //---Pantalla Eleccion---
+    public JPanel getPanelElection(String jugador) {
+        JPanel panelTotal = new JPanel(new GridBagLayout());
+        panelTotal.setPreferredSize(new Dimension(700, 700));
+
+        JPanel panelJuego = new JPanel(new BorderLayout(30, 30));
+        panelJuego.setPreferredSize(new Dimension(800, 800));
+
+        // Determina tablero y panel de opciones en base al jugador
+        JPanel panelTablero = "Jugador1".equals(jugador) ? getTablero(tableroj1) : getTablero(tableroj2);
+        JPanel panelOpciones = "Jugador1".equals(jugador) ? crearPanelOpciones("Jugador1") : crearPanelOpciones("Jugador2");
+
+        panelTablero.setOpaque(false);
+        panelJuego.add(panelTablero, BorderLayout.CENTER);
+        panelJuego.add(panelOpciones, BorderLayout.SOUTH);
+        panelJuego.setOpaque(false);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        panelTotal.setOpaque(false);
+        panelTotal.add(panelJuego, gbc);
+
+        return panelTotal;
+    }
+
+    //----Crear Panel Opciones---
+    private JPanel crearPanelOpciones(String jugador) {
+        JPanel panelOpciones = new JPanel();
+
+        if (Objects.equals(jugador, "Jugador1")) {
+            continuar.setText("Continuar");
+            continuar.setPreferredSize(new Dimension(100, 30));
+            continuar.setForeground(Color.BLACK); // Color del texto
+            continuar.setBackground(Color.LIGHT_GRAY); // Fondo visible (opcional)
+            continuar.setOpaque(true); // Necesario si se configura el fondo
+            panelOpciones.add(continuar);
+
+            cambiarPosicion1.setPreferredSize(new Dimension(100, 30));
+            cambiarPosicion1.setForeground(Color.BLACK);
+            cambiarPosicion1.setBackground(Color.LIGHT_GRAY);
+            cambiarPosicion1.setOpaque(true);
+            cambiarPosicion1.setText("Cambiar Posicion");
+            panelOpciones.add(cambiarPosicion1);
+        } else {
+            confirmar.setText("Confirmar");
+            confirmar.setPreferredSize(new Dimension(100, 30));
+            confirmar.setForeground(Color.BLACK);
+            confirmar.setBackground(Color.LIGHT_GRAY);
+            confirmar.setOpaque(true);
+            panelOpciones.add(confirmar);
+
+            cambiarPosicion2.setPreferredSize(new Dimension(100, 30));
+            cambiarPosicion2.setForeground(Color.BLACK);
+            cambiarPosicion2.setBackground(Color.LIGHT_GRAY);
+            cambiarPosicion2.setOpaque(true);
+            cambiarPosicion2.setText("Cambiar Posicion");
+            panelOpciones.add(cambiarPosicion2);
+        }
+
+        panelOpciones.setOpaque(false);
+        return panelOpciones;
+    }
+
+
     public JButton getStartButton() {
         return startButton;
     }
@@ -187,6 +252,11 @@ public class BattleShipGUI extends JFrame {
     public JButton[][] getTableroj2() {
         return tableroj2;
     }
+    public JButton getCambiarPosicion1() {return cambiarPosicion1;}
+    public JButton getCambiarPosicion2() {return cambiarPosicion2;}
+    public JButton getConfirmar() {return confirmar;}
+    public JButton getContinuar() {return continuar;}
+
 
 
 
@@ -237,7 +307,7 @@ public class BattleShipGUI extends JFrame {
                         ((JLabel) componente).setIcon(icono);
                     index[0]++;
                 } else {
-                    timer.stop(); // fin de la secuencia
+                    timer.stop();
                 }
             }
         });

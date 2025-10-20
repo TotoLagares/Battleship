@@ -12,19 +12,85 @@ public class Controller implements ActionListener {
         JPanel panelInicio = vista.getPanelInicio();
         vista.add(panelInicio);
         comenzarJuego();
-
+        Elecciones();
     }
 
     private void comenzarJuego() {
         vista.getStartButton().addActionListener(e -> {
             vista.remove(vista.getPanelInicio());
             vista.construtorPanelPrincipal();
+            vista.add(vista.getPanelElection("Jugador1"));
+            vista.revalidate();
+            vista.repaint();
+            juego.getTableroJugador1().crearBarcos();
+            juego.getTableroJugador2().crearBarcos();
+            mostrar("Tablero1");
+        });
+    }
+
+    private void Elecciones (){
+        vista.getContinuar().addActionListener(e -> {
+            mostrar("Tablero2");
+            vista.getContentPane().removeAll();
+
+            vista.add(vista.getPanelElection("Jugador2"));
+            vista.revalidate();
+            vista.repaint();
+        });
+        vista.getConfirmar().addActionListener(e -> {
+            limpiar("Tablero2");
+            limpiar("Tablero1");
+            vista.getContentPane().removeAll();
+
             vista.add(vista.switchJugador2());
             vista.revalidate();
             vista.repaint();
             vista.addTableroListener(this);
-
         });
+        vista.getCambiarPosicion1().addActionListener(e -> {
+            limpiar("Tablero1");
+            juego.getTableroJugador1().crearBarcos();
+            mostrar("Tablero1");
+        });
+        vista.getCambiarPosicion2().addActionListener(e -> {
+            limpiar("Tablero2");
+            juego.getTableroJugador2().crearBarcos();
+            mostrar("Tablero2");
+        });
+    }
+
+    private void limpiar(String tablero) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (tablero.equals("Tablero1")) {
+                    vista.getTableroj1()[i][j].setContentAreaFilled(false);
+                }else {
+                    vista.getTableroj2()[i][j].setContentAreaFilled(false);
+                }
+            }
+        }
+    }
+    private void mostrar(String tablero) {
+        for (int i = 0; i < 10; i++) {
+            for(int j = 0; j<10;j++){
+                switch (tablero) {
+                    case "Tablero1":
+                        if (juego.getTableroJugador1().getCasilla(i, j).getTieneBarco()) {
+                            vista.getTableroj1()[i][j].setContentAreaFilled(true);
+                            vista.getTableroj1()[i][j].setBackground(Color.GREEN);
+                        }
+                        break;
+                    case "Tablero2":
+                        if (juego.getTableroJugador2().getCasilla(i, j).getTieneBarco()) {
+                            vista.getTableroj2()[i][j].setContentAreaFilled(true);
+                            vista.getTableroj2()[i][j].setBackground(Color.GREEN);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -32,7 +98,6 @@ public class Controller implements ActionListener {
         int fila = Integer.parseInt(partes[0]);
         int col = Integer.parseInt(partes[1]);
 
-        juego.getTableroJugador1().crearBarcos();
 
         if (juego.getTurnoActual()) {
             if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
@@ -51,7 +116,7 @@ public class Controller implements ActionListener {
             juego.cambiarTurno();
 
             //---Cambio de Tablero---
-            vista.remove(vista.switchJugador2());
+            vista.getContentPane().removeAll();
             vista.add(vista.switchJugador1());
             vista.repaint();
             vista.revalidate();
@@ -68,14 +133,14 @@ public class Controller implements ActionListener {
 
             } else if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
                     && juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
+                vista.getTableroj1()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj1()[fila][col].setBackground(Color.RED);
                 juego.getTableroJugador2().getCasilla(fila, col).disparar();
-                vista.getTableroj1()[fila][col].setEnabled(false);
             }
             juego.cambiarTurno();
 
             //---Cambio de Tablero---
-            vista.remove(vista.switchJugador1());
+            vista.getContentPane().removeAll();
             vista.add(vista.switchJugador2());
             vista.repaint();
             vista.revalidate();
