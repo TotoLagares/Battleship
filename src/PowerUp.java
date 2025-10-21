@@ -29,24 +29,26 @@ public class PowerUp {
     }
 
     public int[] pw2(){
-
+        List<int[]> barcoSinHundir = new ArrayList<>();
         Casilla[][] botones = tablero.getTablero();
-        int[] coordenadas = new int[2];
+        Random rand = new Random();
 
         for(int i = 0; i <= 9; i++){
             for(int j = 0; j <= 9; j++){
+                int[] coordenadas = new int[2];
                 int fila = i;
                 int col = j;
                 if(!botones[i][j].getFueDisparada() && botones[i][j].getTieneBarco()){
                     coordenadas[0] = i;
                     coordenadas[1] = j;
-                    tablero.getCasilla(fila, col).setFueDisparada(true);
-                    return coordenadas;
+                    barcoSinHundir.add(coordenadas);
                 }
             }
         }
+        int[] elegido = barcoSinHundir.get(rand.nextInt(barcoSinHundir.size()));
+        tablero.getCasilla(elegido[0], elegido[1]).setFueDisparada(true);
+        return elegido;
 
-        return null;
     }
 
     public void pw3(){}
