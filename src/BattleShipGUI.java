@@ -126,6 +126,9 @@ public class BattleShipGUI extends JFrame {
         panelJuego1.setOpaque(false);
         panelTotal.setOpaque(false);
 
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/bgPrin1.jpg");
+        setContentPane(bgPanel);
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0; // Centrar horizontalmente
         gbc.gridy = 0; // Centrar verticalmente
@@ -159,6 +162,9 @@ public class BattleShipGUI extends JFrame {
         gbc.gridy = 0; // Centrar verticalmente
         gbc.anchor = GridBagConstraints.CENTER; // Aseguramos que se centre
         panelTotal2.add(panelJuego2, gbc);
+
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/tablero1.png");
+        setContentPane(bgPanel);
 
         return panelTotal2;
     };
@@ -256,6 +262,8 @@ public class BattleShipGUI extends JFrame {
     public JButton getCambiarPosicion2() {return cambiarPosicion2;}
     public JButton getConfirmar() {return confirmar;}
     public JButton getContinuar() {return continuar;}
+    public JButton[] getJ1PowerUps() {return j1PowerUps;}
+    public JButton[] getJ2PowerUps() {return j2PowerUps;}
 
 
 
@@ -292,6 +300,10 @@ public class BattleShipGUI extends JFrame {
                 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         }
+    }
+
+    public void cambiarBackground(String path) {
+
     }
     public void mostrarSecuenciaImagenes(JComponent componente, String[] imagenes, int delay) {
         final int[] index = {0}; // contador interno

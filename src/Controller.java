@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class Controller implements ActionListener {
     private BattleShipGUI vista;
     private Juego juego = new Juego();
+    private PowerUp powerUp = new PowerUp();
 
     public Controller() {
         vista = new BattleShipGUI();
@@ -13,6 +14,8 @@ public class Controller implements ActionListener {
         vista.add(panelInicio);
         comenzarJuego();
         Elecciones();
+        powerUp.setTablero(juego.getTableroJugador1());
+        powerUp.setTablero(juego.getTableroJugador2());
     }
 
     private void comenzarJuego() {
@@ -24,6 +27,7 @@ public class Controller implements ActionListener {
             vista.repaint();
             juego.getTableroJugador1().crearBarcos();
             juego.getTableroJugador2().crearBarcos();
+
             mostrar("Tablero1");
         });
     }
@@ -41,6 +45,9 @@ public class Controller implements ActionListener {
             limpiar("Tablero2");
             limpiar("Tablero1");
             vista.getContentPane().removeAll();
+            usoPowerUp(vista.getJ1PowerUps(), "tablero1");
+            usoPowerUp(vista.getJ2PowerUps(), "tablero2");
+
 
             vista.add(vista.switchJugador2());
             vista.revalidate();
@@ -58,6 +65,35 @@ public class Controller implements ActionListener {
             mostrar("Tablero2");
         });
     }
+    public void usoPowerUp(JButton[] powers, String tablero) {
+        powers[0].addActionListener(e -> {
+            for (int i = 0; i < 3; i++) {
+                int[] coordenadas = powerUp.pw1();
+                int fila = coordenadas[0];
+                int col = coordenadas[1];
+                if (tablero.equals("tablero1")) {
+                   dispararAgua(fila,col,"jugador2");
+                }
+                else if (tablero.equals("tablero2")) {
+                    dispararAgua(fila,col,"jugador1");
+                }
+            }
+        });
+        powers[1].addActionListener(e -> {
+            int[] coordenadas = powerUp.pw2();
+            int fila = coordenadas[0];
+            int col = coordenadas[1];
+            if (tablero.equals("tablero1")) {
+                vista.getTableroj1()[fila][col].setContentAreaFilled(true);
+                vista.getTableroj1()[fila][col].setBackground(Color.green);
+            }
+            else if (tablero.equals("tablero2")) {
+                vista.getTableroj2()[fila][col].setContentAreaFilled(true);
+                vista.getTableroj2()[fila][col].setBackground(Color.green);
+            }
+        });
+    }
+
 
     private void limpiar(String tablero) {
         for (int i = 0; i < 10; i++) {
@@ -100,15 +136,14 @@ public class Controller implements ActionListener {
 
 
         if (juego.getTurnoActual()) {
-            if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
-                    && !juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
-                juego.getTableroJugador1().getCasilla(fila, col).disparar();
-                String[] imagenes = { "src/resources/anim1.jpg", "src/resources/anim2.jpg","src/resources/anim3.jpg" };
-                vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 600);
+            if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
+                    && !juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
+                dispararAgua(fila,col,"jugador1");
 
 
-            } else if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
-                    && juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
+
+            } else if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
+                    && juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
                 vista.getTableroj2()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj2()[fila][col].setBackground(Color.RED);
                 juego.getTableroJugador1().getCasilla(fila, col).disparar();
@@ -124,15 +159,13 @@ public class Controller implements ActionListener {
 
 
         } else {
-            if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
-                    && !juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
-                juego.getTableroJugador2().getCasilla(fila, col).disparar();
-                String[] imagenes = { "src/resources/anim1.jpg", "src/resources/anim2.jpg","src/resources/anim3.jpg" };
-                vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 600);
+            if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
+                    && !juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
+                dispararAgua(fila, col, "jugador2");
 
 
-            } else if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
-                    && juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
+            } else if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
+                    && juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
                 vista.getTableroj1()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj1()[fila][col].setBackground(Color.RED);
                 juego.getTableroJugador2().getCasilla(fila, col).disparar();
@@ -146,5 +179,17 @@ public class Controller implements ActionListener {
             vista.revalidate();
 
         }
+    }
+    private void dispararAgua(int fila, int col, String tirador) {
+        if ("jugador1".equals(tirador)) {
+            juego.getTableroJugador2().getCasilla(fila, col).disparar();
+            String[] imagenes = { "src/resources/anim1.jpg", "src/resources/anim2.jpg","src/resources/anim3.jpg" };
+            vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 600);
+        }else{
+            juego.getTableroJugador1().getCasilla(fila, col).disparar();
+            String[] imagenes = { "src/resources/anim1.jpg", "src/resources/anim2.jpg","src/resources/anim3.jpg" };
+            vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 600);
+        }
+
     }
 }

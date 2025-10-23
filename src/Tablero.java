@@ -17,6 +17,7 @@ public class Tablero {
     public Casilla getCasilla(int fila, int col) {
         return casillas[fila][col];
     }
+    public Casilla[][] getTablero(){return casillas;}
     public void crearBarcos(){
         //----Llamo a la matriz del trablero y hago un num random entre 0 y 9-----
 
