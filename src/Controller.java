@@ -139,7 +139,7 @@ public class Controller implements ActionListener {
             if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
                     && !juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
                 dispararAgua(fila,col,"jugador1");
-
+                camiarTablero("Jugador1");
 
 
             } else if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
@@ -147,21 +147,14 @@ public class Controller implements ActionListener {
                 vista.getTableroj2()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj2()[fila][col].setBackground(Color.RED);
                 juego.getTableroJugador1().getCasilla(fila, col).disparar();
+                camiarTablero("Jugador1");
             }
-            juego.cambiarTurno();
-
-            //---Cambio de Tablero---
-            vista.getContentPane().removeAll();
-            vista.add(vista.switchJugador1());
-            vista.repaint();
-            vista.revalidate();
-
-
 
         } else {
             if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
                     && !juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
                 dispararAgua(fila, col, "jugador2");
+                camiarTablero("Jugador2");
 
 
             } else if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
@@ -169,17 +162,40 @@ public class Controller implements ActionListener {
                 vista.getTableroj1()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj1()[fila][col].setBackground(Color.RED);
                 juego.getTableroJugador2().getCasilla(fila, col).disparar();
+                camiarTablero("Jugador2");
             }
-            juego.cambiarTurno();
 
-            //---Cambio de Tablero---
-            vista.getContentPane().removeAll();
-            vista.add(vista.switchJugador2());
-            vista.repaint();
-            vista.revalidate();
 
         }
     }
+
+    private void camiarTablero(String jugador){
+        Timer timer = new Timer(2500, null);
+        timer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if (jugador.equals("Jugador1")){
+                    juego.cambiarTurno();
+
+                    //---Cambio de Tablero---
+                    vista.getContentPane().removeAll();
+                    vista.add(vista.switchJugador1());
+                    vista.repaint();
+                    vista.revalidate();
+                }else{
+                    juego.cambiarTurno();
+
+                    //---Cambio de Tablero---
+                    vista.getContentPane().removeAll();
+                    vista.add(vista.switchJugador2());
+                    vista.repaint();
+                    vista.revalidate();
+                }
+                timer.stop();
+            }
+        });
+        timer.start();
+    }
+
     private void dispararAgua(int fila, int col, String tirador) {
         if ("jugador1".equals(tirador)) {
             juego.getTableroJugador2().getCasilla(fila, col).disparar();

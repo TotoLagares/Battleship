@@ -23,29 +23,63 @@ public class BattleShipGUI extends JFrame {
 
     public BattleShipGUI() {};
 
-    public JPanel getPanelInicio(){
+    public JPanel getPanelInicio() {
         setTitle("BattleShip");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout(20, 20)); //Gap entre paneles internos
 
-
-        //---Ventana Main---
-        JPanel panelPrincipal = new JPanel( new BorderLayout() );
-
-        BackgroundPanel bgPanel = new BackgroundPanel("resources/bgPrin1.jpg");
-        setContentPane(bgPanel);
-
-        JButton battleShip = new JButton("Jugar");
-        this.startButton = battleShip;
-        battleShip.setSize(25,25);
-        panelPrincipal.add(battleShip,BorderLayout.NORTH);
+        // --- Ventana principal ---
+        JPanel panelPrincipal = new JPanel(new GridBagLayout()); // Usamos GridBagLayout para centrar
         panelPrincipal.setOpaque(false);
 
 
+        JPanel panelComponentes = new JPanel(new GridLayout(1, 2, 30, 30));
+        panelComponentes.setOpaque(false);
+        panelComponentes.setPreferredSize(new Dimension(700, 700));
+
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        setContentPane(bgPanel);
+
+        //Adapto imagenes
+
+            //Icono jugar
+        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonJugar1.png")));
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(450, 450, Image.SCALE_SMOOTH); // Ajusta las dimensiones deseadas
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+            //icono Reglas
+        ImageIcon originalIcon2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/pruebaBotonReglas-Photoroom.png")));
+        Image originalImage2 = originalIcon2.getImage();
+        Image scaledImage2 = originalImage2.getScaledInstance(450, 450, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+
+        JButton battleShip = new JButton();
+        battleShip.setIcon(scaledIcon);
+
+        battleShip.setContentAreaFilled(false);
+        battleShip.setBorderPainted(false);
+        this.startButton = battleShip;
+
+        JButton reglas = new JButton();
+        reglas.setIcon(scaledIcon2);
+
+        reglas.setContentAreaFilled(false);
+        reglas.setBorderPainted(false);
+
+        panelComponentes.add(battleShip);
+        panelComponentes.add(reglas);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelPrincipal.add(panelComponentes, gbc);
+
         setVisible(true);
         return panelPrincipal;
-    };
+    }
+
 
     // ---Creo Tablero--- Cambiar para que sea void
     private void crearTablero(JButton[][] a) {
@@ -112,7 +146,7 @@ public class BattleShipGUI extends JFrame {
         panelTotal.setPreferredSize(new Dimension(700, 700));
 
         JPanel panelJuego1 = new JPanel(new BorderLayout(30, 30));
-        panelJuego1.setPreferredSize(new Dimension(800, 800));
+        panelJuego1.setPreferredSize(new Dimension(600, 600));
 
         JPanel panelTablero1 = getTablero(tableroj1);
         panelTablero1.setOpaque(false);
@@ -126,7 +160,7 @@ public class BattleShipGUI extends JFrame {
         panelJuego1.setOpaque(false);
         panelTotal.setOpaque(false);
 
-        BackgroundPanel bgPanel = new BackgroundPanel("resources/bgPrin1.jpg");
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
         setContentPane(bgPanel);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -143,7 +177,7 @@ public class BattleShipGUI extends JFrame {
         panelTotal2.setPreferredSize(new Dimension(700, 700));
 
         JPanel panelJuego2 = new JPanel(new BorderLayout(30, 30));
-        panelJuego2.setPreferredSize(new Dimension(800, 800));
+        panelJuego2.setPreferredSize(new Dimension(600, 600));
 
         JPanel panelTablero2 = getTablero(tableroj2);
         panelTablero2.setOpaque(false);
@@ -163,7 +197,7 @@ public class BattleShipGUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER; // Aseguramos que se centre
         panelTotal2.add(panelJuego2, gbc);
 
-        BackgroundPanel bgPanel = new BackgroundPanel("resources/tablero1.png");
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
         setContentPane(bgPanel);
 
         return panelTotal2;
@@ -188,7 +222,7 @@ public class BattleShipGUI extends JFrame {
         panelTotal.setPreferredSize(new Dimension(700, 700));
 
         JPanel panelJuego = new JPanel(new BorderLayout(30, 30));
-        panelJuego.setPreferredSize(new Dimension(800, 800));
+        panelJuego.setPreferredSize(new Dimension(600, 600));
 
         // Determina tablero y panel de opciones en base al jugador
         JPanel panelTablero = "Jugador1".equals(jugador) ? getTablero(tableroj1) : getTablero(tableroj2);
@@ -214,6 +248,17 @@ public class BattleShipGUI extends JFrame {
     private JPanel crearPanelOpciones(String jugador) {
         JPanel panelOpciones = new JPanel();
 
+        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/cambiarPosicion-Photoroom.png")));
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(400,130, Image.SCALE_SMOOTH); // Ajusta las dimensiones deseadas
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+
+        ImageIcon originalIcon2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonContinuar.png")));
+        Image originalImage2 = originalIcon2.getImage();
+        Image scaledImage2 = originalImage2.getScaledInstance(300,130, Image.SCALE_SMOOTH); // Ajusta las dimensiones deseadas
+        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+
         if (Objects.equals(jugador, "Jugador1")) {
             continuar.setText("Continuar");
             continuar.setPreferredSize(new Dimension(100, 30));
@@ -229,18 +274,14 @@ public class BattleShipGUI extends JFrame {
             cambiarPosicion1.setText("Cambiar Posicion");
             panelOpciones.add(cambiarPosicion1);
         } else {
-            confirmar.setText("Confirmar");
-            confirmar.setPreferredSize(new Dimension(100, 30));
-            confirmar.setForeground(Color.BLACK);
-            confirmar.setBackground(Color.LIGHT_GRAY);
-            confirmar.setOpaque(true);
+            confirmar.setPreferredSize(new Dimension(230, 60));
+            confirmar.setIcon(scaledIcon2);
+            confirmar.setContentAreaFilled(false);
             panelOpciones.add(confirmar);
 
-            cambiarPosicion2.setPreferredSize(new Dimension(100, 30));
-            cambiarPosicion2.setForeground(Color.BLACK);
-            cambiarPosicion2.setBackground(Color.LIGHT_GRAY);
-            cambiarPosicion2.setOpaque(true);
-            cambiarPosicion2.setText("Cambiar Posicion");
+            cambiarPosicion2.setIcon(scaledIcon);
+            cambiarPosicion2.setPreferredSize(new Dimension(300,60));
+            cambiarPosicion2.setContentAreaFilled(false);
             panelOpciones.add(cambiarPosicion2);
         }
 
@@ -268,43 +309,107 @@ public class BattleShipGUI extends JFrame {
 
 
 
-
-
-
     //---Clase Auxiliar BG ---
-    private static class BackgroundPanel extends JPanel {
-        private BufferedImage background;
+    public class BackgroundPanel extends JPanel {
+        private Image background; // Imagen de fondo
+        private ScaleStrategy scaleStrategy; // Estrategia para el escalado
 
-        public BackgroundPanel(String path) {
-            // intentamos cargar desde disco
-            try {
-                File f = new File(path);
-                if (f.exists()) {
-                    background = ImageIO.read(f);
-                } else {
-                    // intentamos cargar como recurso en classpath
-                    URL res = BackgroundPanel.class.getResource("/" + path);
-                    if (res != null) background = ImageIO.read(res);
-                }
-            } catch (IOException e) {
-                // si falla, dejamos background en null y seguimos
-                background = null;
-            }
+        // Enum para definir las estrategias de escalado
+        public enum ScaleStrategy {
+            SCALE_PROPORTIONAL, // Escala manteniendo proporción (puede dejar bordes)
+            SCALE_FILL,         // Llena el panel (puede recortar la imagen)
+            SCALE_STRETCH       // Ajusta estirando (sin mantener proporción)
+        }
+
+        public BackgroundPanel(String imagePath) {
+            this(imagePath, ScaleStrategy.SCALE_PROPORTIONAL); // Estrategia predeterminada: proporcional
+        }
+
+        public BackgroundPanel(String imagePath, ScaleStrategy scaleStrategy) {
+            // Cargar la imagen
+            this.background = loadImage(imagePath);
+            this.scaleStrategy = scaleStrategy;
             setLayout(new BorderLayout());
+        }
+
+        // Permitir cambiar la imagen de fondo dinámicamente
+        public void setBackgroundImage(String imagePath) {
+            this.background = loadImage(imagePath);
+            repaint(); // Redibujar el panel
+        }
+
+        // Cambiar la estrategia de escalado
+        public void setScaleStrategy(ScaleStrategy strategy) {
+            this.scaleStrategy = strategy;
+            repaint();
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+
             if (background != null) {
-                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                // Configurar renderizado de alta calidad
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Obtener dimensiones del panel y de la imagen
+                int panelWidth = getWidth();
+                int panelHeight = getHeight();
+                int imageWidth = background.getWidth(this);
+                int imageHeight = background.getHeight(this);
+
+                int newWidth, newHeight;
+                int x = 0, y = 0;
+
+                switch (scaleStrategy) {
+                    case SCALE_PROPORTIONAL:
+                        // Escalar proporcionalmente
+                        double scaleX = (double) panelWidth / imageWidth;
+                        double scaleY = (double) panelHeight / imageHeight;
+                        double scale = Math.min(scaleX, scaleY); // Escalar a la menor proporción para evitar cortes
+                        newWidth = (int) (imageWidth * scale);
+                        newHeight = (int) (imageHeight * scale);
+                        x = (panelWidth - newWidth) / 2;
+                        y = (panelHeight - newHeight) / 2;
+                        break;
+
+                    case SCALE_FILL:
+                        // Llenar completamente, recortando la imagen si es necesario
+                        scaleX = (double) panelWidth / imageWidth;
+                        scaleY = (double) panelHeight / imageHeight;
+                        scale = Math.max(scaleX, scaleY); // Escalar a la mayor proporción
+                        newWidth = (int) (imageWidth * scale);
+                        newHeight = (int) (imageHeight * scale);
+                        x = (panelWidth - newWidth) / 2;
+                        y = (panelHeight - newHeight) / 2;
+                        break;
+
+                    case SCALE_STRETCH:
+                    default:
+                        // Estirar sin mantener proporciones
+                        newWidth = panelWidth;
+                        newHeight = panelHeight;
+                        break;
+                }
+
+                // Dibujar la imagen escalada
+                g2d.drawImage(background, x, y, newWidth, newHeight, this);
+            }
+        }
+
+        private Image loadImage(String imagePath) {
+            try {
+                return new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath))).getImage();
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen: " + imagePath);
+                return null;
             }
         }
     }
 
-    public void cambiarBackground(String path) {
 
-    }
     public void mostrarSecuenciaImagenes(JComponent componente, String[] imagenes, int delay) {
         final int[] index = {0}; // contador interno
 
