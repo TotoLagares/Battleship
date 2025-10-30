@@ -145,7 +145,6 @@ public class Controller implements ActionListener {
             } else if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
                     && juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
                 dispararNave(fila,col,"jugador1");
-                juego.getTableroJugador1().getCasilla(fila, col).disparar();
                 camiarTablero("Jugador1");
             }
 
@@ -159,7 +158,6 @@ public class Controller implements ActionListener {
             } else if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
                     && juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
                 dispararNave(fila, col, "jugador2");
-                juego.getTableroJugador2().getCasilla(fila, col).disparar();
                 camiarTablero("Jugador2");
             }
 
@@ -168,7 +166,7 @@ public class Controller implements ActionListener {
     }
 
     private void camiarTablero(String jugador){
-        Timer timer = new Timer(2500, null);
+        Timer timer = new Timer(1800, null);
         timer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 if (jugador.equals("Jugador1")){
@@ -198,11 +196,11 @@ public class Controller implements ActionListener {
         if ("jugador1".equals(tirador)) {
             juego.getTableroJugador2().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2.png","src/resources/animacion3.png" };
-            vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 600);
+            vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 450);
         }else{
             juego.getTableroJugador1().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2.png","src/resources/animacion3.png" };
-            vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 600);
+            vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 450);
         }
 
     }
@@ -210,11 +208,11 @@ public class Controller implements ActionListener {
         if ("jugador1".equals(tirador)) {
             juego.getTableroJugador2().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
-            vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 600);
+            vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 450);
         }else{
             juego.getTableroJugador1().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
-            vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 600);
+            vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 450);
         }
 
     }
