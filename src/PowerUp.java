@@ -49,6 +49,17 @@ public class PowerUp {
 
     }
 
-    public void pw3(){}
+    public List<int[]> pw3(){
+        Random rand = new Random();
+        int filaRandom =  rand.nextInt(10);
+        List<int[]> filaBoton = new ArrayList<>();
+        for(int i = 0; i <= 9; i++){
+            int[] coordenadas = new int[2];
+            coordenadas[0] = filaRandom;
+            coordenadas[1] = i;
+            filaBoton.add(coordenadas);
+        }
+        return filaBoton;
+    }
 
 }

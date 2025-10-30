@@ -36,15 +36,14 @@ public class Juego {
     }
 
     private boolean comprobarBarosHundidos(Tablero tablero){
-        int cont = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                if (tablero.getCasilla(i, j).getTieneBarco() && tablero.getCasilla(i, j).getFueDisparada()) {
-                    cont++;
+                if (tablero.getCasilla(i, j).getTieneBarco() && !tablero.getCasilla(i, j).getFueDisparada()) {
+                    return false;
                 }
             }
         }
-        return cont == 17;
+        return true;
 
     }
 }

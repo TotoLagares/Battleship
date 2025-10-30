@@ -1,7 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.Timer;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 public class Controller implements ActionListener {
     private BattleShipGUI vista;
@@ -67,7 +71,7 @@ public class Controller implements ActionListener {
     }
     public void usoPowerUp(JButton[] powers, String tablero) {
         powers[0].addActionListener(e -> {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 5; i++) {
                 int[] coordenadas = powerUp.pw1();
                 int fila = coordenadas[0];
                 int col = coordenadas[1];
@@ -78,6 +82,7 @@ public class Controller implements ActionListener {
                     dispararAgua(fila,col,"jugador1");
                 }
             }
+            powers[0].setEnabled(false);
         });
         powers[1].addActionListener(e -> {
             int[] coordenadas = powerUp.pw2();
@@ -91,6 +96,26 @@ public class Controller implements ActionListener {
                 vista.getTableroj2()[fila][col].setContentAreaFilled(true);
                 vista.getTableroj2()[fila][col].setBackground(Color.green);
             }
+          powers[1].setEnabled(false);
+        });
+        powers[2].addActionListener(e -> {
+            List<int[]> filaBoton = new ArrayList<>();
+            filaBoton = powerUp.pw3();
+            int[] coordenadas = new int[2];
+            for (int i = 0; i <= 9; i++) {
+                coordenadas[0] = filaBoton.get(i)[0];
+                coordenadas[1] = filaBoton.get(i)[1];
+                if (tablero.equals("tablero1")) {
+                    if(juego.getTableroJugador2().getCasilla(coordenadas[0], coordenadas[1]).getTieneBarco()){
+                        dispararNave(coordenadas[0],coordenadas[1],"jugador2");
+                    }else {dispararAgua(coordenadas[0],coordenadas[1],"jugador2");}
+                } else if (tablero.equals("tablero2")) {
+                    if(juego.getTableroJugador1().getCasilla(coordenadas[0], coordenadas[1]).getTieneBarco()){
+                        dispararNave(coordenadas[0],coordenadas[1],"jugador1");
+                    }else {dispararAgua(coordenadas[0],coordenadas[1],"jugador1");}
+                }
+            }
+            powers[2].setEnabled(false);
         });
     }
 
@@ -136,6 +161,7 @@ public class Controller implements ActionListener {
 
 
         if (juego.getTurnoActual()) {
+
             if (!juego.getTableroJugador2().getCasilla(fila, col).getFueDisparada()
                     && !juego.getTableroJugador2().getCasilla(fila, col).getTieneBarco()) {
                 dispararAgua(fila,col,"jugador1");
@@ -147,8 +173,10 @@ public class Controller implements ActionListener {
                 dispararNave(fila,col,"jugador1");
                 camiarTablero("Jugador1");
             }
+            if(juego.verificarGanador(1)){System.out.println("Ganador 1");}
 
         } else {
+
             if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
                     && !juego.getTableroJugador1().getCasilla(fila, col).getTieneBarco()) {
                 dispararAgua(fila, col, "jugador2");
@@ -160,7 +188,7 @@ public class Controller implements ActionListener {
                 dispararNave(fila, col, "jugador2");
                 camiarTablero("Jugador2");
             }
-
+            if(juego.verificarGanador(2)){System.out.println("Ganador 2");}
 
         }
     }
