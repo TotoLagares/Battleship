@@ -2,12 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import javax.imageio.ImageIO;
 
 
 public class BattleShipGUI extends JFrame {
@@ -56,14 +51,14 @@ public class BattleShipGUI extends JFrame {
 
         JButton battleShip = new JButton();
         battleShip.setIcon(scaledIcon);
-
+        battleShip.setBorderPainted(false);
         battleShip.setContentAreaFilled(false);
         battleShip.setBorderPainted(false);
         this.startButton = battleShip;
 
         JButton reglas = new JButton();
         reglas.setIcon(scaledIcon2);
-
+        reglas.setBorderPainted(false);
         reglas.setContentAreaFilled(false);
         reglas.setBorderPainted(false);
 
@@ -87,9 +82,10 @@ public class BattleShipGUI extends JFrame {
             for (int j = 0; j < 10; j++) {
                 if (a[i][j] == null) { // Creamos el botón solo si no existe
                     JButton botonCelda = new JButton("");
-                    botonCelda.setPreferredSize(new Dimension(30, 30));
+                    botonCelda.setPreferredSize(new Dimension(50, 50));
                     botonCelda.setContentAreaFilled(false);
                     a[i][j] = botonCelda;
+
                 }
             }
         }
@@ -116,9 +112,39 @@ public class BattleShipGUI extends JFrame {
     private void crearPanelPowerUps(JButton[] a) {
         for (int i=0;i<3; i++ ) {
             JButton boton = new JButton();
-            boton.setPreferredSize(new Dimension(30, 30));
             a[i]=boton;
         }
+
+        //icono Sniper
+        ImageIcon originalIconSniper = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonSniper2-Photoroom.png")));
+        Image originalImageSniper = originalIconSniper.getImage();
+        Image scaledImageSniper = originalImageSniper.getScaledInstance(250, 120, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconSniper = new ImageIcon(scaledImageSniper);
+        a[1].setContentAreaFilled(false);
+        a[1].setBorderPainted(false);
+        a[1].setIcon(scaledIconSniper);
+        a[1].setPreferredSize(new Dimension(200, 70));
+
+        //Icono Explotar
+        ImageIcon originalIconExplotar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonExplotar-Photoroom.png")));
+        Image originalImageExplotar = originalIconExplotar.getImage();
+        Image scaledImageExplotar = originalImageExplotar.getScaledInstance(250, 120, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconExplotar  = new ImageIcon(scaledImageExplotar);
+        a[0].setContentAreaFilled(false);
+        a[0].setBorderPainted(false);
+        a[0].setIcon(scaledIconExplotar );
+        a[0].setPreferredSize(new Dimension(200, 70));
+
+        //Icono Barrer
+        ImageIcon originalIconBarrer = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonBarrer.png")));
+        Image originalImageBarrer = originalIconBarrer.getImage();
+        Image scaledImageBarrer = originalImageBarrer.getScaledInstance(250, 120, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconBarrer  = new ImageIcon(scaledImageBarrer);
+        a[2].setContentAreaFilled(false);
+        a[2].setBorderPainted(false);
+        a[2].setIcon(scaledIconBarrer);
+        a[2].setPreferredSize(new Dimension(200, 70));
+
     }
 
     //---getTablero---
@@ -160,7 +186,7 @@ public class BattleShipGUI extends JFrame {
         panelJuego1.setOpaque(false);
         panelTotal.setOpaque(false);
 
-        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/BGj2.3.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
         setContentPane(bgPanel);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -197,7 +223,7 @@ public class BattleShipGUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER; // Aseguramos que se centre
         panelTotal2.add(panelJuego2, gbc);
 
-        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/BGj1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
         setContentPane(bgPanel);
 
         return panelTotal2;
@@ -260,18 +286,14 @@ public class BattleShipGUI extends JFrame {
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
 
         if (Objects.equals(jugador, "Jugador1")) {
-            continuar.setText("Continuar");
-            continuar.setPreferredSize(new Dimension(100, 30));
-            continuar.setForeground(Color.BLACK); // Color del texto
-            continuar.setBackground(Color.LIGHT_GRAY); // Fondo visible (opcional)
-            continuar.setOpaque(true); // Necesario si se configura el fondo
+            continuar.setPreferredSize(new Dimension(230, 60));
+            continuar.setIcon(scaledIcon2);
+            continuar.setContentAreaFilled(false);
             panelOpciones.add(continuar);
 
-            cambiarPosicion1.setPreferredSize(new Dimension(100, 30));
-            cambiarPosicion1.setForeground(Color.BLACK);
-            cambiarPosicion1.setBackground(Color.LIGHT_GRAY);
-            cambiarPosicion1.setOpaque(true);
-            cambiarPosicion1.setText("Cambiar Posicion");
+            cambiarPosicion1.setIcon(scaledIcon);
+            cambiarPosicion1.setPreferredSize(new Dimension(300,60));
+            cambiarPosicion1.setContentAreaFilled(false);
             panelOpciones.add(cambiarPosicion1);
         } else {
             confirmar.setPreferredSize(new Dimension(230, 60));
@@ -417,11 +439,15 @@ public class BattleShipGUI extends JFrame {
         timer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (index[0] < imagenes.length) {
-                    ImageIcon icono = new ImageIcon(imagenes[index[0]]);
+                    ImageIcon originalIconBarrer = new ImageIcon(imagenes[index[0]]);
+                    Image originalImageBarrer = originalIconBarrer.getImage();
+                    Image scaledImageBarrer = originalImageBarrer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                    ImageIcon scaledIconBarrer  = new ImageIcon(scaledImageBarrer);
+
                     if (componente instanceof JButton)
-                        ((JButton) componente).setIcon(icono);
+                        ((JButton) componente).setIcon(scaledIconBarrer);
                     else if (componente instanceof JLabel)
-                        ((JLabel) componente).setIcon(icono);
+                        ((JLabel) componente).setIcon(scaledIconBarrer);
                     index[0]++;
                 } else {
                     timer.stop();
