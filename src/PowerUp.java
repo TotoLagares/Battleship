@@ -22,7 +22,6 @@ public class PowerUp {
         } while (tablero.getCasilla(fila, col).getFueDisparada());
         coordenadas[0] = fila;
         coordenadas[1] = col;
-        tablero.getCasilla(fila, col).setFueDisparada(true);
         return coordenadas;
     }
 
@@ -44,7 +43,6 @@ public class PowerUp {
             }
         }
         int[] elegido = barcoSinHundir.get(rand.nextInt(barcoSinHundir.size()));
-        tablero.getCasilla(elegido[0], elegido[1]).setFueDisparada(true);
         return elegido;
 
     }

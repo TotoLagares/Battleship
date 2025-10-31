@@ -2,15 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.Objects;
 
 
 public class BattleShipGUI extends JFrame {
     private JButton startButton;
+    private JButton reglas = new JButton();
     private JButton cambiarPosicion1 = new JButton();
     private JButton cambiarPosicion2 = new JButton();
     private JButton confirmar = new JButton();
     private JButton continuar = new JButton();
+    private JButton salir = new JButton();
+    private JButton inicio = new JButton();
     private JButton[][] tableroj1= new JButton[10][10];
     private JButton[][] tableroj2= new JButton[10][10];
     private JButton[] j1PowerUps= new JButton[3];
@@ -61,6 +65,7 @@ public class BattleShipGUI extends JFrame {
         reglas.setBorderPainted(false);
         reglas.setContentAreaFilled(false);
         reglas.setBorderPainted(false);
+        this.reglas = reglas;
 
         panelComponentes.add(battleShip);
         panelComponentes.add(reglas);
@@ -74,9 +79,95 @@ public class BattleShipGUI extends JFrame {
         setVisible(true);
         return panelPrincipal;
     }
+    public JPanel getPanelReglas() {
+        BackgroundPanel bgPanel = new BackgroundPanel("resources/pruebaFBGc2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        setContentPane(bgPanel);
+
+        JPanel panelPrincipal = new JPanel(new GridBagLayout());
+        panelPrincipal.setOpaque(false);
+        panelPrincipal.setPreferredSize(new Dimension(1000, 700));
+
+        // Configurar restricciones para manejar posiciones y tamaños
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        // Crear el área de texto (TextArea) y configurarla
+        JTextArea textAreaReglas = new JTextArea();
+        textAreaReglas.setEditable(false);
+        textAreaReglas.setLineWrap(true);
+        textAreaReglas.setWrapStyleWord(true);
+        textAreaReglas.setFont(new Font("Arial", Font.PLAIN, 18));
+        textAreaReglas.setBackground(new Color(0, 0, 0, 100));
+        textAreaReglas.setForeground(Color.WHITE);
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                Objects.requireNonNull(getClass().getResourceAsStream("/resources/reglas.txt"))))) {
+            StringBuilder reglasTexto = new StringBuilder();
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                reglasTexto.append(linea).append("\n");
+            }
+            textAreaReglas.setText(reglasTexto.toString());
+        } catch (Exception e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
 
 
-    // ---Creo Tablero--- Cambiar para que sea void
+        JScrollPane scrollPane = new JScrollPane(textAreaReglas);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.setMinimumSize(new Dimension(600, 400));
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBackground(new Color(0, 0, 0, 0));
+
+        panelPrincipal.add(scrollPane, gbc);
+
+        //
+        ImageIcon originalIconInicio = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonInicio.png")));
+        Image originalImageInicio = originalIconInicio.getImage();
+        Image scaledImageInicio = originalImageInicio.getScaledInstance(450, 120, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconInicio  = new ImageIcon(scaledImageInicio);
+        // Crear el botón "Regresar"
+        JButton botonRegresar = new JButton();
+        botonRegresar.setIcon(scaledIconInicio);
+        botonRegresar.setBorderPainted(false);
+        botonRegresar.setContentAreaFilled(false);
+        botonRegresar.setPreferredSize(new Dimension(350, 70));
+        this.inicio = botonRegresar;
+
+        // Configurar restricciones para el botón
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelPrincipal.add(botonRegresar, gbc);
+
+        return panelPrincipal;
+    }
+    public JPanel getPanelFinal(String ganador){
+        BackgroundPanel bgPanel = ganador.equals("jugador1") ? new BackgroundPanel("/resources/ganador1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH) : new BackgroundPanel("/resources/ganador2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        setContentPane(bgPanel);
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+
+        ImageIcon originalIconInicio = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/InicioGanador.png")));
+        Image originalImageInicio = originalIconInicio.getImage();
+        Image scaledImageInicio = originalImageInicio.getScaledInstance(450, 120, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconInicio  = new ImageIcon(scaledImageInicio);
+        JButton botonRegresar = new JButton();
+        botonRegresar.setIcon(scaledIconInicio);
+        this.inicio = botonRegresar;
+        botonRegresar.setBorderPainted(false);
+        botonRegresar.setContentAreaFilled(false);
+        botonRegresar.setPreferredSize(new Dimension(350, 70));
+        panelPrincipal.add(botonRegresar, BorderLayout.SOUTH);
+
+        return  panelPrincipal;
+    }
+
+    // ---Creo Tablero---
     private void crearTablero(JButton[][] a) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -85,7 +176,6 @@ public class BattleShipGUI extends JFrame {
                     botonCelda.setPreferredSize(new Dimension(50, 50));
                     botonCelda.setContentAreaFilled(false);
                     a[i][j] = botonCelda;
-
                 }
             }
         }
@@ -327,7 +417,8 @@ public class BattleShipGUI extends JFrame {
     public JButton getContinuar() {return continuar;}
     public JButton[] getJ1PowerUps() {return j1PowerUps;}
     public JButton[] getJ2PowerUps() {return j2PowerUps;}
-
+    public JButton getInicio() {return inicio;}
+    public JButton getReglas(){return reglas;}
 
 
 

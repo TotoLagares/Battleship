@@ -1,0 +1,53 @@
+----------------------------------------------------------------------------------
+
+    Reglamento: Batalla Espacial
+
+----------------------------------------------------------------------------------
+
+    Objetivo
+
+* Destruir todas las naves del oponente antes de que él destruya las tuyas.
+
+* Cada jugador dispone de su flota, un tablero espacial (10x10) y tres habilidades
+  especiales que solo pueden usarse una vez por partida.
+
+----------------------------------------------------------------------------------
+
+    Inicio del Juego
+
+* Cada jugador coloca sus naves en su cuadrícula (ocultas para el rival).
+
+* El Jugador 1 comienza la partida.
+
+* Los turnos se alternan entre los jugadores.
+
+----------------------------------------------------------------------------------
+
+    Turnos Normales
+
+* En cada turno, el jugador elige una coordenada del tablero enemigo para atacar.
+
+* Si acierta en una nave, se marca como impacto.
+
+* Si falla, se marca como vacío.
+
+* El jugador puede seguir hasta hundir una nave o fallar, según las reglas clásicas.
+
+----------------------------------------------------------------------------------
+
+    Habilidades Especiales (solo una vez cada una)
+
+1. Ráfaga de Plasma
+
+    * Dispara en aleatoria 5 casillas enemigas.
+    * Ideal para intentar descubrir zonas densas.
+
+2. Francotirador Estelar
+
+    * Apunta con precisión quirúrgica a una única parte específica de una nave enemiga.
+    * Si acierta, esa parte de la nave queda completamente destruida.
+
+3. Tormenta Cósmica
+
+    * Atraviesa toda una fila del tablero enemigo con un rayo de energía.
+    * Revela todas las casillas de esa fila (aciertos y fallos).
