@@ -116,7 +116,7 @@ public class Controller implements ActionListener {
             else{
                 dispararNave(fila,col,"jugador2");
             }
-          powers[1].setEnabled(false);
+//          powers[1].setEnabled(false);
         });
 
         powers[2].addActionListener(e -> {
@@ -199,6 +199,7 @@ public class Controller implements ActionListener {
                 camiarTablero("Jugador1");
             }
 
+
         } else {
 
             if (!juego.getTableroJugador1().getCasilla(fila, col).getFueDisparada()
@@ -214,6 +215,7 @@ public class Controller implements ActionListener {
             }
 
         }
+
     }
 
     private void camiarTablero(String jugador){
@@ -260,10 +262,16 @@ public class Controller implements ActionListener {
             juego.getTableroJugador2().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
             vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 450);
+            if (juego.verificarGanador(1)){
+                System.out.println("ganador 1");
+            }
         }else{
             juego.getTableroJugador1().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
             vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 450);
+            if (juego.verificarGanador(2)){
+                System.out.println("ganador 2");
+            }
         }
 
     }
