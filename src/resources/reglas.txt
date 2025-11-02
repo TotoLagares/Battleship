@@ -1,8 +1,34 @@
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
-    Reglamento: Batalla Espacial
+    Historia
 
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
+Año 3187.
+
+Tras siglos de expansión, la Coalición Solar y el Dominio de Orión reclaman el mismo
+territorio: el Sector V-09, una franja de vacío rica en portales gravitacionales
+capaces de alterar la estructura del espacio-tiempo.
+
+Pero no se trata solo de rutas estelares.
+Bajo ese sector, los sensores detectaron una anomalía energética: una fuente desconocida,
+más antigua que cualquier civilización registrada. Ambos bandos creen que puede ser la
+llave para controlar el salto intergaláctico, o el fin de todo lo que existe.
+
+Ambas flotas llegan al mismo tiempo.
+Ningún planeta. Ningún refugio. Solo acero, fuego y silencio.
+
+En el corazón del vacío, comienza la batalla que decidirá quién domina los caminos del universo…
+y quién se pierde para siempre en ellos.
+El eco de las explosiones resuena en sistemas que jamás verán la luz.
+
+La guerra por el vacío… hancomenzado.
+
+-------------------------------------------------------------------------------------
+
+    Reglamento: NEBULA CLASH
+
+-------------------------------------------------------------------------------------
 
     Objetivo
 
@@ -11,7 +37,7 @@
 * Cada jugador dispone de su flota, un tablero espacial (10x10) y tres habilidades
   especiales que solo pueden usarse una vez por partida.
 
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
     Inicio del Juego
 
@@ -21,7 +47,7 @@
 
 * Los turnos se alternan entre los jugadores.
 
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
     Turnos Normales
 
@@ -33,7 +59,7 @@
 
 * El jugador puede seguir hasta hundir una nave o fallar, según las reglas clásicas.
 
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
     Habilidades Especiales (solo una vez cada una)
 
