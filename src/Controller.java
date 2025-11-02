@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.Timer;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -10,13 +9,14 @@ import java.util.List;
 public class Controller implements ActionListener {
     private BattleShipGUI vista;
     private Juego juego = new Juego();
-    private PowerUp powerUp = new PowerUp();
+    private PowerUp powerUp1 = new PowerUp();
+    private PowerUp powerUp2 = new PowerUp();
 
     public Controller() {
         vista = new BattleShipGUI();
         vista.add(vista.getPanelInicio());
-        powerUp.setTablero(juego.getTableroJugador1());
-        powerUp.setTablero(juego.getTableroJugador2());
+        powerUp1.setTablero(juego.getTableroJugador1());
+        powerUp2.setTablero(juego.getTableroJugador2());
         juego.getTableroJugador1().crearBarcos();
         juego.getTableroJugador2().crearBarcos();
         vista.construtorPanelPrincipal();
@@ -74,10 +74,10 @@ public class Controller implements ActionListener {
             vista.add(vista.getPanelReglas());
             vista.revalidate();
             vista.repaint();
-            reglas();
+            listenerInicio();
         });
     }
-    private void reglas() {
+    private void listenerInicio() {
         vista.getInicio().addActionListener(e -> {
             vista.getContentPane().removeAll();
             vista.add(vista.getPanelInicio());
@@ -89,7 +89,8 @@ public class Controller implements ActionListener {
     public void usoPowerUp(JButton[] powers, String tablero) {
         powers[0].addActionListener(e -> {
             for (int i = 0; i < 5; i++) {
-                int[] coordenadas = powerUp.pw1();
+
+                int[] coordenadas = "tablero1".equals(tablero) ? powerUp1.pw1(): powerUp2.pw1();
                 if (tablero.equals("tablero1")) {
                     if(juego.getTableroJugador1().getCasilla(coordenadas[0],coordenadas[1]).getTieneBarco() && !juego.getTableroJugador1().getCasilla(coordenadas[0],coordenadas[1]).getFueDisparada()){
                         dispararNave(coordenadas[0],coordenadas[1],"jugador2");
@@ -108,7 +109,8 @@ public class Controller implements ActionListener {
             powers[0].setEnabled(false);
         });
         powers[1].addActionListener(e -> {
-            int[] coordenadas = powerUp.pw2();
+            int[] coordenadas = "tablero1".equals(tablero) ? powerUp1.pw2(): powerUp2.pw2();
+
             int fila = coordenadas[0];
             int col = coordenadas[1];
             if (tablero.equals("tablero2")) {
@@ -117,12 +119,13 @@ public class Controller implements ActionListener {
             else if (tablero.equals("tablero1") && !juego.getTableroJugador1().getCasilla(fila,col).getFueDisparada()) {
                 dispararNave(fila,col,"jugador2");
             }
-          powers[1].setEnabled(false);
+            powers[1].setEnabled(false);
         });
 
         powers[2].addActionListener(e -> {
             List<int[]> filaBoton = new ArrayList<>();
-            filaBoton = powerUp.pw3();
+            filaBoton= "tablero1".equals(tablero) ? powerUp1.pw3(): powerUp2.pw3();
+
             int[] coordenadas = new int[2];
             for (int i = 0; i <= 9; i++) {
                 coordenadas[0] = filaBoton.get(i)[0];
@@ -264,16 +267,31 @@ public class Controller implements ActionListener {
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
             vista.mostrarSecuenciaImagenes(vista.getTableroj2()[fila][col], imagenes, 450);
             if (juego.verificarGanador(1)){
-                System.out.println("ganador 1");
+               vista.getContentPane().removeAll();
+               vista.add(vista.getPanelFinal("jugador1"));
+               vista.revalidate();
+               vista.repaint();
+               System.out.println("ganador 1");
+               listReiniciar();
+
             }
-        }else{
+        }else if ("jugador2".equals(tirador)){
             juego.getTableroJugador1().getCasilla(fila, col).disparar();
             String[] imagenes = { "src/resources/animacion1.1.png", "src/resources/animacion2Nav.png","src/resources/animacion3Nav.png" };
             vista.mostrarSecuenciaImagenes(vista.getTableroj1()[fila][col], imagenes, 450);
             if (juego.verificarGanador(2)){
+                vista.getContentPane().removeAll();
+                vista.add(vista.getPanelFinal("jugador2"));
+                vista.revalidate();
+                vista.repaint();
                 System.out.println("ganador 2");
+                listReiniciar();
             }
         }
-
+    }
+    private void listReiniciar(){
+        vista.getReiniciar().addActionListener(e -> {
+                vista.dispose();
+        });
     }
 }

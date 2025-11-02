@@ -13,12 +13,12 @@ public class BattleShipGUI extends JFrame {
     private JButton cambiarPosicion2 = new JButton();
     private JButton confirmar = new JButton();
     private JButton continuar = new JButton();
-    private JButton salir = new JButton();
     private JButton inicio = new JButton();
     private JButton[][] tableroj1= new JButton[10][10];
     private JButton[][] tableroj2= new JButton[10][10];
     private JButton[] j1PowerUps= new JButton[3];
     private JButton[] j2PowerUps= new JButton[3];
+    private JButton reiniciar = new JButton();
 
     public BattleShipGUI() {};
 
@@ -44,7 +44,7 @@ public class BattleShipGUI extends JFrame {
             //Icono jugar
         ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonJugar1.png")));
         Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(450, 450, Image.SCALE_SMOOTH); // Ajusta las dimensiones deseadas
+        Image scaledImage = originalImage.getScaledInstance(450, 450, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
             //icono Reglas
@@ -102,6 +102,8 @@ public class BattleShipGUI extends JFrame {
         textAreaReglas.setFont(new Font("Arial", Font.PLAIN, 18));
         textAreaReglas.setBackground(new Color(0, 0, 0, 100));
         textAreaReglas.setForeground(Color.WHITE);
+        textAreaReglas.setCaretPosition(0);
+
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 Objects.requireNonNull(getClass().getResourceAsStream("/resources/reglas.txt"))))) {
@@ -111,6 +113,7 @@ public class BattleShipGUI extends JFrame {
                 reglasTexto.append(linea).append("\n");
             }
             textAreaReglas.setText(reglasTexto.toString());
+            textAreaReglas.setCaretPosition(0);
         } catch (Exception e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
         }
@@ -123,6 +126,7 @@ public class BattleShipGUI extends JFrame {
         scrollPane.setMinimumSize(new Dimension(600, 400));
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
         scrollPane.setBackground(new Color(0, 0, 0, 0));
 
         panelPrincipal.add(scrollPane, gbc);
@@ -148,21 +152,26 @@ public class BattleShipGUI extends JFrame {
         return panelPrincipal;
     }
     public JPanel getPanelFinal(String ganador){
-        BackgroundPanel bgPanel = ganador.equals("jugador1") ? new BackgroundPanel("/resources/ganador1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH) : new BackgroundPanel("/resources/ganador2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
+        BackgroundPanel bgPanel = ganador.equals("jugador1") ? new BackgroundPanel("resources/ganador1.1.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH) : new BackgroundPanel("resources/ganador2.2.png", BackgroundPanel.ScaleStrategy.SCALE_STRETCH);
         setContentPane(bgPanel);
         JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.setOpaque(false);
 
-        ImageIcon originalIconInicio = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/InicioGanador.png")));
+        JPanel panelComponentes = new JPanel(new GridLayout(1, 1, 70, 70));
+        panelComponentes.setOpaque(false);
+
+        ImageIcon originalIconInicio = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/botonCerrar.png")));
         Image originalImageInicio = originalIconInicio.getImage();
-        Image scaledImageInicio = originalImageInicio.getScaledInstance(450, 120, Image.SCALE_SMOOTH);
+        Image scaledImageInicio = originalImageInicio.getScaledInstance(550, 160, Image.SCALE_SMOOTH);
         ImageIcon scaledIconInicio  = new ImageIcon(scaledImageInicio);
         JButton botonRegresar = new JButton();
         botonRegresar.setIcon(scaledIconInicio);
-        this.inicio = botonRegresar;
+        this.reiniciar = botonRegresar;
         botonRegresar.setBorderPainted(false);
         botonRegresar.setContentAreaFilled(false);
-        botonRegresar.setPreferredSize(new Dimension(350, 70));
-        panelPrincipal.add(botonRegresar, BorderLayout.SOUTH);
+        botonRegresar.setPreferredSize(new Dimension(450, 150));
+        panelComponentes.add(botonRegresar);
+        panelPrincipal.add(panelComponentes, BorderLayout.SOUTH);
 
         return  panelPrincipal;
     }
@@ -379,21 +388,25 @@ public class BattleShipGUI extends JFrame {
             continuar.setPreferredSize(new Dimension(230, 60));
             continuar.setIcon(scaledIcon2);
             continuar.setContentAreaFilled(false);
+            continuar.setBorderPainted(false);
             panelOpciones.add(continuar);
 
             cambiarPosicion1.setIcon(scaledIcon);
             cambiarPosicion1.setPreferredSize(new Dimension(300,60));
             cambiarPosicion1.setContentAreaFilled(false);
+            cambiarPosicion1.setBorderPainted(false);
             panelOpciones.add(cambiarPosicion1);
         } else {
             confirmar.setPreferredSize(new Dimension(230, 60));
             confirmar.setIcon(scaledIcon2);
             confirmar.setContentAreaFilled(false);
+            confirmar.setBorderPainted(false);
             panelOpciones.add(confirmar);
 
             cambiarPosicion2.setIcon(scaledIcon);
             cambiarPosicion2.setPreferredSize(new Dimension(300,60));
             cambiarPosicion2.setContentAreaFilled(false);
+            cambiarPosicion2.setBorderPainted(false);
             panelOpciones.add(cambiarPosicion2);
         }
 
@@ -419,7 +432,7 @@ public class BattleShipGUI extends JFrame {
     public JButton[] getJ2PowerUps() {return j2PowerUps;}
     public JButton getInicio() {return inicio;}
     public JButton getReglas(){return reglas;}
-
+    public JButton getReiniciar(){return reiniciar;}
 
 
     //---Clase Auxiliar BG ---
@@ -460,6 +473,7 @@ public class BattleShipGUI extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+
 
             if (background != null) {
                 // Configurar renderizado de alta calidad
