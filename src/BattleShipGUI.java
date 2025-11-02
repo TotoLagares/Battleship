@@ -23,7 +23,7 @@ public class BattleShipGUI extends JFrame {
     public BattleShipGUI() {};
 
     public JPanel getPanelInicio() {
-        setTitle("BattleShip");
+        setTitle("Nebula Clash");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
