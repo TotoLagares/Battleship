@@ -41,7 +41,6 @@ public class Tablero {
                 // Barco de 2 (diagonal)
                 a[8][7].setTieneBarco(true);
                 a[9][8].setTieneBarco(true);
-                System.out.println("0");
             }
             case 1 -> {
                 for (int i = 0; i < 5; i++) a[i][0].setTieneBarco(true); // vertical izquierda
@@ -50,7 +49,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][8].setTieneBarco(true); // vertical derecha
                 a[9][1].setTieneBarco(true);
                 a[9][2].setTieneBarco(true);
-                System.out.println("1");
             }
 
             case 2 -> {
@@ -60,7 +58,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][7].setTieneBarco(true);
                 a[4][8].setTieneBarco(true);
                 a[5][9].setTieneBarco(true);
-                System.out.println("2");
             }
             case 3 -> {
                 for (int i = 5; i < 10; i++) a[i][1].setTieneBarco(true); // vertical derecha baja
@@ -69,7 +66,6 @@ public class Tablero {
                 for (int j = 6; j < 9; j++) a[8][j].setTieneBarco(true);  // horizontal abajo
                 a[3][2].setTieneBarco(true);
                 a[4][3].setTieneBarco(true);
-                System.out.println("3");
             }
 
             case 4 -> {
@@ -79,7 +75,6 @@ public class Tablero {
                 for (int i = 3; i < 6; i++) a[i][8].setTieneBarco(true);
                 a[2][2].setTieneBarco(true);
                 a[3][3].setTieneBarco(true);
-                System.out.println("4");
             }
             case 5 -> {
                 for (int j = 1; j < 6; j++) a[2][j].setTieneBarco(true);
@@ -88,7 +83,6 @@ public class Tablero {
                 for (int i = 5; i < 8; i++) a[i][5].setTieneBarco(true);
                 a[9][3].setTieneBarco(true);
                 a[8][4].setTieneBarco(true);
-                System.out.println("5");
             }
             case 6 -> {
                 for (int i = 0; i < 5; i++) a[i][3].setTieneBarco(true); // vertical izquierda
@@ -97,7 +91,6 @@ public class Tablero {
                 for (int i = 6; i < 9; i++) a[i][8].setTieneBarco(true); // vertical derecha
                 a[5][6].setTieneBarco(true);
                 a[6][7].setTieneBarco(true);
-                System.out.println("6");
             }
 
             case 7 -> {
@@ -107,7 +100,6 @@ public class Tablero {
                 for (int i = 6; i < 9; i++) a[i][3].setTieneBarco(true);
                 a[0][9].setTieneBarco(true);
                 a[1][8].setTieneBarco(true);
-                System.out.println("7");
             }
             case 8 -> {
                 for (int j = 2; j < 7; j++) a[3][j].setTieneBarco(true);
@@ -116,7 +108,6 @@ public class Tablero {
                 for (int i = 0; i < 3; i++) a[i][9 - i].setTieneBarco(true);
                 a[5][5].setTieneBarco(true);
                 a[6][6].setTieneBarco(true);
-                System.out.println("8");
             }
             case 9 -> {
                 for (int i = 0; i < 5; i++) a[i][9].setTieneBarco(true);
@@ -125,7 +116,6 @@ public class Tablero {
                 for (int j = 0; j < 3; j++) a[0][j].setTieneBarco(true);
                 a[9][7].setTieneBarco(true);
                 a[8][8].setTieneBarco(true);
-                System.out.println("9");
             }
             case 10 -> {
                 for (int j = 0; j < 5; j++) a[2][j].setTieneBarco(true);
@@ -134,7 +124,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][5].setTieneBarco(true);
                 a[9][8].setTieneBarco(true);
                 a[8][9].setTieneBarco(true);
-                System.out.println("10");
             }
 
             case 11 -> {
@@ -144,7 +133,6 @@ public class Tablero {
                 for (int i = 6; i < 9; i++) a[i][6].setTieneBarco(true); // vertical derecha media
                 a[9][8].setTieneBarco(true);
                 a[8][9].setTieneBarco(true);
-                System.out.println("11");
             }
 
 
@@ -155,7 +143,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][8].setTieneBarco(true);
                 a[8][2].setTieneBarco(true);
                 a[9][3].setTieneBarco(true);
-                System.out.println("12");
             }
 
             case 13 -> {
@@ -165,7 +152,6 @@ public class Tablero {
                 for (int i = 6; i < 9; i++) a[i][8].setTieneBarco(true); // vertical derecha
                 a[3][1].setTieneBarco(true);
                 a[4][2].setTieneBarco(true);
-                System.out.println("13");
             }
 
 
@@ -176,7 +162,6 @@ public class Tablero {
                 for (int i = 6; i < 9; i++) a[i][3].setTieneBarco(true);
                 a[1][8].setTieneBarco(true);
                 a[0][9].setTieneBarco(true);
-                System.out.println("14");
             }
 
             case 15 -> {
@@ -186,7 +171,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][1].setTieneBarco(true); // vertical izquierda baja
                 a[5][8].setTieneBarco(true);  // toque extra en esquina
                 a[6][9].setTieneBarco(true);  // toque diagonal
-                System.out.println("15");
             }
 
 
@@ -197,7 +181,6 @@ public class Tablero {
                 for (int i = 7; i < 10; i++) a[i][2].setTieneBarco(true);
                 a[8][5].setTieneBarco(true);
                 a[9][6].setTieneBarco(true);
-                System.out.println("16");
             }
         }
 

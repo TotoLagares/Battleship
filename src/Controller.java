@@ -15,21 +15,25 @@ public class Controller implements ActionListener {
     public Controller() {
         vista = new BattleShipGUI();
         vista.add(vista.getPanelInicio());
-        comenzarJuego();
-
         powerUp.setTablero(juego.getTableroJugador1());
         powerUp.setTablero(juego.getTableroJugador2());
+        juego.getTableroJugador1().crearBarcos();
+        juego.getTableroJugador2().crearBarcos();
+        vista.construtorPanelPrincipal();
+        usoPowerUp(vista.getJ1PowerUps(), "tablero1");
+        usoPowerUp(vista.getJ2PowerUps(), "tablero2");
+        comenzarJuego();
+
+
     }
 
     private void comenzarJuego() {
         vista.getStartButton().addActionListener(e -> {
             vista.remove(vista.getPanelInicio());
-            vista.construtorPanelPrincipal();
             vista.add(vista.getPanelElection("Jugador1"));
             vista.revalidate();
             vista.repaint();
-            juego.getTableroJugador1().crearBarcos();
-            juego.getTableroJugador2().crearBarcos();
+
 
             mostrar("Tablero1");
         });
@@ -48,8 +52,7 @@ public class Controller implements ActionListener {
             limpiar("Tablero2");
             limpiar("Tablero1");
             vista.getContentPane().removeAll();
-            usoPowerUp(vista.getJ1PowerUps(), "tablero1");
-            usoPowerUp(vista.getJ2PowerUps(), "tablero2");
+
 
 
             vista.add(vista.switchJugador2());
@@ -68,7 +71,6 @@ public class Controller implements ActionListener {
             mostrar("Tablero2");
         });
         vista.getReglas().addActionListener(e -> {
-            vista.getContentPane().removeAll();
             vista.add(vista.getPanelReglas());
             vista.revalidate();
             vista.repaint();
@@ -81,7 +83,6 @@ public class Controller implements ActionListener {
             vista.add(vista.getPanelInicio());
             vista.revalidate();
             vista.repaint();
-            System.out.println("Inicio");
             comenzarJuego();
         });
     }
@@ -113,10 +114,10 @@ public class Controller implements ActionListener {
             if (tablero.equals("tablero2")) {
               dispararNave(fila,col,"jugador1");
             }
-            else{
+            else if (tablero.equals("tablero1") && !juego.getTableroJugador1().getCasilla(fila,col).getFueDisparada()) {
                 dispararNave(fila,col,"jugador2");
             }
-//          powers[1].setEnabled(false);
+          powers[1].setEnabled(false);
         });
 
         powers[2].addActionListener(e -> {
